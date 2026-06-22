@@ -13,8 +13,12 @@ pipeline {
             steps {
                 unstash 'sources'
                 bat '''
-                    echo Restaurando paquetes NuGet...
-                    nuget restore Monolito_4bm.sln
+                    echo Restaurando paquetes NuGet con detalle...
+                    nuget restore Monolito_4bm.sln -Verbosity detailed -Source https://api.nuget.org/v3/index.json -Force
+                    
+                    echo Mostrando paquetes restaurados (packages folder)...
+                    if exist packages dir packages
+                    
                     echo Compilando solucion...
                     msbuild Monolito_4bm.sln /p:Configuration=Release /p:Platform="Any CPU"
                 '''
