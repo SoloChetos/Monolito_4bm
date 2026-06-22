@@ -33,17 +33,17 @@ pipeline {
                 '''
             }
         }
-        stage('Publicar') {
-            agent { label 'windows' }
-            steps {
-                bat '''
-                    echo Publicando archivos...
-                    if not exist "C:\\publicado\\Monolito" mkdir "C:\\publicado\\Monolito"
-                    xcopy /E /Y "Monolito_4bm\\bin" "C:\\publicado\\Monolito"
-                '''
-                archiveArtifacts artifacts: 'C:\\publicado\\Monolito\\**', fingerprint: true
-            }
-        }
+     stage('Publicar') {
+    agent { label 'windows' }
+    steps {
+        bat '''
+            echo Publicando archivos...
+            if not exist "publish_output" mkdir "publish_output"
+            xcopy /E /Y "Monolito_4bm\\bin" "publish_output"
+        '''
+        archiveArtifacts artifacts: 'publish_output/**', fingerprint: true
+    }
+}
     }
     post {
         success {
