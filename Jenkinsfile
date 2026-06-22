@@ -13,13 +13,22 @@ pipeline {
             steps {
                 unstash 'sources'
                 bat '''
-                    echo Restaurando paquetes NuGet con detalle...
-                    nuget restore Monolito_4bm.sln -Verbosity detailed -Source https://api.nuget.org/v3/index.json -Force
-                    
-                    echo Mostrando paquetes restaurados (packages folder)...
-                    if exist packages dir packages
-                    
-                    echo Compilando solucion...
+                    echo [PASO 1] Limpiando cache de paquetes NuGet...
+                    if exist packages rmdir /S /Q packages
+                    if exist "%USERPROFILE%\\.nuget\\packages" rmdir /S /Q "%USERPROFILE%\\.nuget\\packages"
+
+                    echo [PASO 2] Restaurando paquetes NuGet desde cero...
+                    nuget restore Monolito_4bm.sln -Source https://api.nuget.org/v3/index.json
+
+                    echo [PASO 3] Verificando QRCoder.dll...
+                    if not exist "packages\\QRCoder.1.8.0\\lib\\net40\\QRCoder.dll" (
+                        echo *** QRCoder.dll no encontrado. Instalando manualmente...
+                        nuget install QRCoder -Version 1.8.0 -OutputDirectory packages -Source https://api.nuget.org/v3/index.json
+                    ) else (
+                        echo *** QRCoder.dll encontrado correctamente.
+                    )
+
+                    echo [PASO 4] Compilando solucion...
                     msbuild Monolito_4bm.sln /p:Configuration=Release /p:Platform="Any CPU"
                 '''
             }
