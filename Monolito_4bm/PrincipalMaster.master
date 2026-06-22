@@ -1,0 +1,231 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="PrincipalMaster.master.cs" Inherits="Monolito_4bm.PrincipalMaster" %>
+
+<!DOCTYPE html>
+<html lang="es">
+<head runat="server">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <title>Sistema Óptica - Monolito 4BM</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet" />
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: #fafafa; 
+            padding-top: 80px; 
+            color: #212529; 
+        }
+
+        /* NAVBAR MINIMALISTA */
+        .navbar { 
+            background-color: #ffffff; 
+            border-bottom: 1px solid #eaeaea;
+            padding: 0.8rem 2rem; 
+            transition: all 0.3s ease;
+        }
+        
+        .navbar-brand { 
+            font-weight: 700; 
+            font-size: 1.25rem; 
+            color: #1a1a1a !important; 
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        
+        .nav-link { 
+            color: #555555 !important; 
+            font-weight: 500; 
+            font-size: 0.95rem;
+            transition: 0.2s; 
+            margin: 0 10px;
+        }
+        .nav-link:hover { 
+            color: #000000 !important; 
+        }
+
+        /* AVATAR DE PERFIL ACTUALIZADO (Mayor tamaño y jerarquía) */
+        .profile-avatar { 
+            width: 48px;  /* Aumentado de 36px a 48px */
+            height: 48px; /* Aumentado de 36px a 48px */
+            border-radius: 50%; 
+            object-fit: cover; 
+            border: 2px solid #eaeaea; /* Borde más definido para enmarcar la foto */
+            background: #fff; 
+            cursor: pointer;
+            transition: border-color 0.2s ease;
+        }
+        .profile-avatar:hover {
+            border-color: #cccccc;
+        }
+        
+        .profile-avatar.initials { 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            font-weight: 600; 
+            font-size: 1.2rem; /* Texto escalado proporcionalmente al nuevo tamaño */
+            color: #1a1a1a; 
+            background: #f4f4f4; 
+        }
+
+        .dropdown-toggle::after { display: none; }
+        .dropdown-menu { 
+            border-radius: 8px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05); 
+            border: 1px solid #eaeaea; 
+            padding: 8px 0; 
+            margin-top: 10px; /* Separación sutil por el nuevo tamaño del avatar */
+        }
+        .dropdown-item { 
+            padding: 10px 20px; 
+            font-size: 14px; 
+            color: #444; 
+            transition: background 0.2s; 
+        }
+        .dropdown-item:hover { 
+            background: #f8f9fa; 
+            color: #000; 
+        }
+        .dropdown-item i { margin-right: 8px; width: 18px; color: #777; }
+
+        .card {
+            background: #ffffff;
+            border-radius: 8px;
+            border: 1px solid #eaeaea;
+            box-shadow: none; 
+            transition: box-shadow 0.2s;
+        }
+        .card:hover {
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+        }
+        
+        .btn-primary {
+            background-color: #212529;
+            border: 1px solid #212529;
+            color: #fff;
+            font-weight: 500;
+            border-radius: 4px;
+            padding: 0.5rem 1.5rem;
+            transition: all 0.2s;
+        }
+        .btn-primary:hover {
+            background-color: #343a40;
+            border-color: #343a40;
+        }
+
+        .site-footer {
+            background: transparent;
+            margin-top: 4rem;
+            padding: 2rem 0;
+            text-align: center;
+            color: #888;
+            font-size: 0.85rem;
+            border-top: none;
+        }
+
+        .navbar-layout {
+            display: flex;
+            width: 100%;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .navbar-zone { flex: 1; display: flex; }
+        .navbar-zone.left { justify-content: flex-start; }
+        .navbar-zone.center { justify-content: center; }
+        .navbar-zone.right { justify-content: flex-end; }
+
+        @media (max-width: 991px) { 
+            body { padding-top: 70px; }
+            .navbar-zone.center { flex: 2; justify-content: flex-start; margin-left: 1rem; }
+        }
+    </style>
+    <asp:ContentPlaceHolder ID="HeadContent" runat="server" />
+</head>
+<body id="masterBody" runat="server">
+    <form id="masterForm" runat="server" enctype="multipart/form-data">
+        
+        <nav class="navbar navbar-expand-lg fixed-top">
+            <div class="container-fluid navbar-layout">
+                
+                <div class="navbar-zone left">
+                    <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContenido" aria-controls="navbarContenido" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarContenido">
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0" id="ulMenuDinamico" runat="server">
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="navbar-zone center">
+                    <a class="navbar-brand" href="Default.aspx">
+                        <i class="fas fa-glasses me-2"></i>ÓPTICA 4BM
+                    </a>
+                </div>
+
+                <div class="navbar-zone right">
+                    <div class="dropdown">
+                        <button class="btn btn-link p-0 d-flex align-items-center text-decoration-none dropdown-toggle" type="button" id="dropdownPerfil" data-bs-toggle="dropdown" aria-expanded="false">
+                            <asp:Image ID="imgPerfilMaster" runat="server" CssClass="profile-avatar" Visible="False" />
+                            <div id="avatarInitials" class="profile-avatar initials" runat="server" Visible="False"></div>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownPerfil">
+                            <li><a class="dropdown-item" href="Perfil/Perfil.aspx"><i class="fas fa-user"></i> Mi Perfil</a></li>
+                            <li><a id="lnkInicio" runat="server" class="dropdown-item" href="Default.aspx"><i class="fas fa-home"></i> Inicio</a></li>
+                            <li><hr class="dropdown-divider" /></li>
+                            <li>
+                                <asp:LinkButton ID="btnCerrarSesionMaster" runat="server" CssClass="dropdown-item" OnClick="btnCerrarSesionMaster_Click" OnClientClick="return confirmarCierreSesion();">
+                                    <i class="fas fa-sign-out-alt"></i> Cerrar sesión
+                                </asp:LinkButton>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </nav>
+
+        <div class="container mt-4 mb-5">
+            <asp:ContentPlaceHolder ID="MainContent" runat="server" />
+        </div>
+
+        <footer class="site-footer">
+            <div class="container">
+                <p>&copy; <%= DateTime.Now.Year %> Óptica Monolito 4BM. Todos los derechos reservados.</p>
+            </div>
+        </footer>
+    </form>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script type="text/javascript">
+        function confirmarCierreSesion() {
+            Swal.fire({
+                title: '¿Cerrar sesión?',
+                text: 'Saldrás del sistema de gestión.',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#212529',
+                cancelButtonColor: '#e0e0e0',
+                cancelButtonText: '<span style="color:#333">Cancelar</span>',
+                confirmButtonText: 'Sí, salir',
+                customClass: {
+                    popup: 'border-radius-8'
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    __doPostBack('<%= btnCerrarSesionMaster.UniqueID %>', '');
+                }
+            });
+            return false;
+        }
+    </script>
+    <asp:ContentPlaceHolder ID="ScriptsContent" runat="server" />
+</body>
+</html>

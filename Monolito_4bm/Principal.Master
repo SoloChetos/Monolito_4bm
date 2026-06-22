@@ -1,0 +1,210 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Principal.master.cs" Inherits="Monolito_4bm.Principal" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+    <title>Sistema</title>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet" />
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        body {
+            background-color: #f4f6f9;
+        }
+
+        .dashboard-wrapper {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* SIDEBAR */
+        .sidebar {
+            width: 260px;
+            background-color: #1f2937;
+            color: white;
+            padding: 25px 20px;
+        }
+
+        .profile-section {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .profile-avatar img {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            border: 3px solid #374151;
+        }
+
+        .profile-section h3 {
+            margin-top: 12px;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .menu {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .menu a,
+        .menu .asp-button {
+            text-decoration: none;
+            color: white;
+            padding: 12px 15px;
+            border-radius: 8px;
+            background-color: #374151;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .menu a:hover,
+        .menu .asp-button:hover {
+            background-color: #4b5563;
+        }
+
+        /* CONTENIDO */
+        .main-content {
+            flex: 1;
+            padding: 30px;
+        }
+
+        .topbar {
+            background-color: white;
+            padding: 18px 25px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .content-box {
+            background-color: white;
+            padding: 25px;
+            border-radius: 12px;
+            min-height: 400px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .logout-btn {
+            background-color: #7f1d1d !important;
+        }
+
+        .logout-btn:hover {
+            background-color: #991b1b !important;
+        }
+    </style>
+
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+
+<body>
+
+    <form id="form1" runat="server">
+
+        <div class="dashboard-wrapper">
+
+            <!-- SIDEBAR -->
+            <aside class="sidebar">
+
+                <div class="profile-section">
+
+                    <div class="profile-avatar">
+                        <img src="https://ui-avatars.com/api/?name=Usuario&background=374151&color=fff&size=128"
+                            alt="Avatar" />
+                    </div>
+
+                    <h3>
+                        <asp:Label ID="lbl_nse" runat="server" Text="Usuario"></asp:Label>
+                    </h3>
+
+                </div>
+
+                <div class="menu">
+
+                    <!-- PANEL ADMIN -->
+                    <asp:Panel ID="pnl_admin" runat="server">
+
+                        <a href="/Admin/Inicio.aspx">
+                            <i class="fa-solid fa-house"></i>
+                            Inicio Admin
+                        </a>
+
+                        <a href="/Admin/Usuarios.aspx">
+                            <i class="fa-solid fa-users"></i>
+                            Usuarios
+                        </a>
+
+                        <a href="/Admin/Reportes.aspx">
+                            <i class="fa-solid fa-chart-column"></i>
+                            Reportes
+                        </a>
+
+                    </asp:Panel>
+
+                    <!-- PANEL USUARIO -->
+                    <asp:Panel ID="pnl_usu" runat="server">
+
+                        <a href="/Usuario/Inicio.aspx">
+                            <i class="fa-solid fa-house"></i>
+                            Inicio
+                        </a>
+
+                        <a href="/Usuario/Perfil.aspx">
+                            <i class="fa-solid fa-user"></i>
+                            Perfil
+                        </a>
+
+                    </asp:Panel>
+
+                    <!-- CERRAR SESIÓN -->
+                    <asp:Button
+                        ID="btn_cerrar"
+                        runat="server"
+                        Text="Cerrar Sesión"
+                        CssClass="asp-button logout-btn"
+                        OnClick="btn_cerrar_Click" />
+
+                </div>
+
+            </aside>
+
+            <!-- CONTENIDO -->
+            <main class="main-content">
+
+                <div class="topbar">
+                    <h2>Panel del Sistema</h2>
+                </div>
+
+                <div class="content-box">
+
+                    <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                    </asp:ContentPlaceHolder>
+
+                </div>
+
+            </main>
+
+        </div>
+
+    </form>
+
+</body>
+</html>

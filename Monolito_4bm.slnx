@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="Capa_Datos/Capa_Datos.csproj" Id="0e1e53b6-d4db-430b-9bcf-46270da38dcc" />
+  <Project Path="Capa_Negocio/Capa_Negocio.csproj" Id="04495c83-8189-42dc-a2b5-039fae05d306" />
+  <Project Path="ConsoleApp1/ConsoleApp1.csproj" Id="92147700-f6e5-440e-bf92-73a77d4204d2" />
+  <Project Path="Monolito_4bm/Monolito_4bm.csproj" Id="8bebb45b-6bee-4bda-bf9d-e6dc3d55ee8b" />
+</Solution>

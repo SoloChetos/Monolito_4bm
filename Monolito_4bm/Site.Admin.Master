@@ -1,0 +1,61 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.Admin.Master.cs" Inherits="Monolito_4bm.SiteAdmin" %>
+<!DOCTYPE html>
+<html lang="es">
+<head runat="server">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%: Page.Title %> - Panel Administrador</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&amp;display=swap" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" />
+    <style>
+        body { font-family: 'Open Sans', sans-serif; background: #f0f2f5; }
+        .admin-navbar { background: linear-gradient(135deg, #1a1a2e, #16213e) !important; }
+        .admin-navbar .navbar-brand { font-weight: 700; color: #e8a87c !important; }
+        .admin-navbar .nav-link { color: rgba(255,255,255,0.8) !important; font-weight: 600; font-size: 14px; }
+        .admin-navbar .nav-link:hover { color: #e8a87c !important; }
+        .admin-navbar .nav-link.active { color: #e8a87c !important; border-bottom: 2px solid #e8a87c; }
+        .admin-content { padding: 30px 0; min-height: calc(100vh - 120px); }
+        .admin-footer { background: #1a1a2e; color: rgba(255,255,255,0.5); padding: 15px 0; text-align: center; font-size: 13px; }
+        .user-info { color: rgba(255,255,255,0.7); font-size: 13px; }
+        .user-info img { width: 32px; height: 32px; border-radius: 50%; margin-right: 8px; border: 2px solid #e8a87c; }
+    </style>
+    <asp:ContentPlaceHolder ID="HeadContent" runat="server" />
+</head>
+<body>
+    <form id="form1" runat="server">
+        <asp:ScriptManager ID="ScriptManager1" runat="server" />
+        <nav class="navbar navbar-expand-lg admin-navbar">
+            <div class="container">
+                <a class="navbar-brand" href="AdminPanel.aspx"><i class="fas fa-shield-alt"></i> Bienvenido Admin</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#adminNav" style="border-color: rgba(255,255,255,0.3);">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="adminNav">
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item"><a class="nav-link" href="AdminPanel.aspx"><i class="fas fa-home"></i> Inicio</a></li>
+                        <li class="nav-item"><a class="nav-link" href="AdminPanel.aspx"><i class="fas fa-users-cog"></i> Gestionar Usuarios</a></li>
+                    </ul>
+                    <div class="user-info d-flex align-items-center">
+                        <asp:Image ID="imgPerfil" runat="server" ImageUrl="~/favicon.ico" Width="32" Height="32" CssClass="rounded-circle" style="border: 2px solid #e8a87c; margin-right: 8px;" />
+                        <asp:Label ID="lblUsuario" runat="server" Text="Admin" CssClass="me-3" style="color: rgba(255,255,255,0.8);" />
+                        <asp:LinkButton ID="btnCerrarSesion" runat="server" CssClass="btn btn-sm btn-outline-light" OnClick="btnCerrarSesion_Click">
+                            <i class="fas fa-sign-out-alt"></i> Salir
+                        </asp:LinkButton>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <div class="container admin-content">
+            <asp:ContentPlaceHolder ID="MainContent" runat="server" />
+        </div>
+        <footer class="admin-footer">
+            <p>&copy; <%: DateTime.Now.Year %> Panel Administrador</p>
+        </footer>
+    </form>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <asp:ContentPlaceHolder ID="ScriptContent" runat="server" />
+</body>
+</html>
