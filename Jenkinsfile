@@ -50,7 +50,7 @@ pipeline {
                 bat '''
                     echo Publicando archivos...
                     if not exist "publish_output" mkdir "publish_output"
-                    xcopy /E /Y "Monolito_4bm\\bin" "publish_output"
+                    xcopy /E /Y "Monolito_4bm\\*" "publish_output\\"
                 '''
                 archiveArtifacts artifacts: 'publish_output/**', fingerprint: true
             }
