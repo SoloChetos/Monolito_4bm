@@ -15,10 +15,19 @@ try {
 
 # Prueba MongoDB
 try {
-    $client = New-Object MongoDB.Driver.MongoClient("mongodb://localhost:27017")
-    $db = $client.GetDatabase("Monolito4bm")
-    $db.RunCommand("{ping:1}") | Out-Null
-    $xml += '<testcase name="Conexion_MongoDB" classname="ConexionBD" time="0"/>'
+    # Cargar ensamblados de MongoDB
+    $driverPath = ".\packages\MongoDB.Driver.3.9.0\lib\net472\MongoDB.Driver.dll"
+    $bsonPath = ".\packages\MongoDB.Bson.3.9.0\lib\net472\MongoDB.Bson.dll"
+    if (Test-Path $driverPath) {
+        Add-Type -Path $driverPath
+        Add-Type -Path $bsonPath
+        $client = New-Object MongoDB.Driver.MongoClient("mongodb://localhost:27017")
+        $db = $client.GetDatabase("Monolito4bm")
+        $db.RunCommand("{ping:1}") | Out-Null
+        $xml += '<testcase name="Conexion_MongoDB" classname="ConexionBD" time="0"/>'
+    } else {
+        throw "No se encontraron las DLLs de MongoDB en $driverPath"
+    }
 } catch {
     $xml += '<testcase name="Conexion_MongoDB" classname="ConexionBD" time="0"><failure message="Error: ' + $_.Exception.Message + '"/></testcase>'
 }
