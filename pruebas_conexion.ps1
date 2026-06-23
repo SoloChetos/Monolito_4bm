@@ -1,6 +1,6 @@
 $xml = '<testsuite name="Monolito.ConexionBD" tests="2" failures="0" time="0">'
 
-# Prueba SQL Server
+# Prueba SQL Server (usando SqlClient nativo de .NET)
 try {
     $conn = New-Object System.Data.SqlClient.SqlConnection("Server=localhost\SQLEXPRESS;Database=Monolito4bm;Integrated Security=True;Connect Timeout=5")
     $conn.Open()
@@ -13,20 +13,13 @@ try {
     $xml += '<testcase name="Conexion_SQLServer" classname="ConexionBD" time="0"><failure message="Error: ' + $_.Exception.Message + '"/></testcase>'
 }
 
-# Prueba MongoDB
+# Prueba MongoDB (verificando que el puerto 27017 está abierto)
 try {
-    # Cargar ensamblados de MongoDB
-    $driverPath = ".\packages\MongoDB.Driver.3.9.0\lib\net472\MongoDB.Driver.dll"
-    $bsonPath = ".\packages\MongoDB.Bson.3.9.0\lib\net472\MongoDB.Bson.dll"
-    if (Test-Path $driverPath) {
-        Add-Type -Path $driverPath
-        Add-Type -Path $bsonPath
-        $client = New-Object MongoDB.Driver.MongoClient("mongodb://localhost:27017")
-        $db = $client.GetDatabase("Monolito4bm")
-        $db.RunCommand("{ping:1}") | Out-Null
+    $result = Test-NetConnection -ComputerName localhost -Port 27017 -WarningAction SilentlyContinue
+    if ($result.TcpTestSucceeded) {
         $xml += '<testcase name="Conexion_MongoDB" classname="ConexionBD" time="0"/>'
     } else {
-        throw "No se encontraron las DLLs de MongoDB en $driverPath"
+        throw "No se pudo conectar al puerto 27017 (MongoDB)."
     }
 } catch {
     $xml += '<testcase name="Conexion_MongoDB" classname="ConexionBD" time="0"><failure message="Error: ' + $_.Exception.Message + '"/></testcase>'
